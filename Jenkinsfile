@@ -1,6 +1,5 @@
 pipeline {
-    agent {Terraform}
-
+    agent any
     stages {
         stage("TF Init&Plan") { 
             steps { 
