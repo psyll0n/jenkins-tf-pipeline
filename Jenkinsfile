@@ -4,6 +4,14 @@ def awsCredentials = [[$class: 'AmazonWebServicesCredentialsBinding', credential
 pipeline {
     agent any
 
+    options {
+    disableConcurrentBuilds()
+    parallelsAlwaysFailFast()
+    timestamps()
+    withCredentials(awsCredentials)
+  }
+
+
     stages {
         stage("TF Init&Plan") { 
             steps { 
