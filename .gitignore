@@ -7,7 +7,7 @@
 *.tfstate.*
 terraform.tfstate.backup
 terraform.tfvars
-
+.terraform.lock.hcl
 
 # Crash log files
 crash.log
