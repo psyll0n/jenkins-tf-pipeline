@@ -1,5 +1,9 @@
+def awsCredentials = [[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS']]
+
+
 pipeline {
     agent any
+
     stages {
         stage("TF Init&Plan") { 
             steps { 
