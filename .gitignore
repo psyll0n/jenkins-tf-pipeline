@@ -40,3 +40,6 @@ terraform.rc
 
 # Local .terraform directories
 **/.terraform/*
+
+# Ignore private repo key.
+id_rsa
