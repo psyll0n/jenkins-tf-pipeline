@@ -1,5 +1,5 @@
 pipeline {
-    agent Terraform
+    agent {Terraform}
 
     stages {
         stage("TF Init&Plan") { 
