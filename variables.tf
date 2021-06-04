@@ -76,3 +76,5 @@ variable "root_device_size" {
   type        = string
   default     = "8"
 }
+
+

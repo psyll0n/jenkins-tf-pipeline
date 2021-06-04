@@ -1,9 +1,9 @@
 output "vpc_id" {
-    value = aws_vpc.module_vpc.cidr_block
+    value = aws_vpc.vpc_module.cidr_block
 }
 
 output "vpc_cidr" {
-    value = aws_vpc.module_vpc.cidr_block
+    value = aws_vpc.vpc_module.cidr_block
 }
 
 output "public_subnet_cidr_a" {
@@ -29,4 +29,3 @@ output "public_subnet_cidr_c" {
 output "private_subnet_cidr_c" {
     value = aws_subnet.private_subnet_c.cidr_block
 }
-
