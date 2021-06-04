@@ -1,4 +1,17 @@
 
+module "vpc" {
+  source  = "/modules"
+  version = "2.21.0"
+
+  name = var.vpc_name
+  cidr = var.vpc_cidr
+
+  azs             = var.vpc_azs
+  private_subnets = var.vpc_private_subnets
+  public_subnets  = var.vpc_public_subnets
+
+  tags = var.vpc_tags
+}
 
 
 resource "aws_s3_bucket" "terraform_state" {
