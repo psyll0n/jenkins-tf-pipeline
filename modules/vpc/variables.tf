@@ -4,8 +4,6 @@ variable "vpc_cidr_block" {
   type        = string
 }
 
-
-
 variable "public_subnet_cidr_a" {
   description = "Public Subnet CIDR A"
 }

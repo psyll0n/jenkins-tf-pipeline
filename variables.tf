@@ -52,13 +52,6 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "public_subnet_a" {
-  description = "ID of the EC2 instance deploymnent"
-  type        = string
-  default     = "subnet-04597bffb7164421b"
-
-}
-
 variable "key_pair" {
   description = "SSH Key pair used to connect"
   type        = string
