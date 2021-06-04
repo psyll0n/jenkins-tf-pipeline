@@ -80,7 +80,7 @@ resource "aws_route_table" "rt" {
 
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.rt.id
+    gateway_id = aws_internet_gateway.gw.id
   }
 
   tags = {
@@ -109,7 +109,7 @@ resource "aws_route_table_association" "rta-c" {
 resource "aws_security_group" "sg" {
   name        = "main-sg"
   description = "Default SG for the 10.0.0.0/16 VPC"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.module_vpc.id
 
   ingress {
     description      = "Inbound SSH"
