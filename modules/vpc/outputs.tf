@@ -38,6 +38,3 @@ output "aws_route_table" {
     value = aws_route_table.rt.id
 }
 
-output "aws_security_group" {
-    value = aws_security_group.sg.id
-}

@@ -9,6 +9,16 @@ module "vpc_module" {
   private_subnet_cidr_c = var.private_subnet_cidr_c
 }
 
+module "ec2_module" {
+  source           = "./modules/ec2"
+  instance_ami     = var.instance_ami
+  instance_type    = var.instance_type
+  key_pair         = var.key_pair
+  root_device_type = var.root_device_type
+  root_device_size = var.root_device_size
+}
+
+
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "devops-tf-tfstate-backend"
   # Enable versioning so we can see the full revision history of our
