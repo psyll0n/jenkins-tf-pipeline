@@ -18,3 +18,7 @@ variable "root_device_type" {
 variable "root_device_size" {
   description = "Size of the root block device"
 }
+
+variable "subnet_id" {
+    description = "Subnet where the EC2 instance is deployed"
+}

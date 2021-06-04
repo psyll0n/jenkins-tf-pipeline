@@ -70,3 +70,7 @@ variable "root_device_size" {
   default     = "8"
 }
 
+variable "subnet_id" {
+    description = "Subnet where the EC2 instance is deployed"
+    default = "public_subnet_a"
+}
