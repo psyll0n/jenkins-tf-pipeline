@@ -16,6 +16,7 @@ module "ec2_module" {
   key_pair         = var.key_pair
   root_device_type = var.root_device_type
   root_device_size = var.root_device_size
+  subnet_id        = var.subnet_id
 }
 
 
