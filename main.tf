@@ -1,8 +1,6 @@
 
 module "vpc" {
   source  = "/modules"
-  version = "2.21.0"
-
   name = var.vpc_name
   cidr = var.vpc_cidr
 
