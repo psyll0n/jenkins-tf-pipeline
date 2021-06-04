@@ -72,5 +72,5 @@ variable "root_device_size" {
 
 variable "subnet_id" {
     description = "Subnet where the EC2 instance is deployed"
-    default = subnet-04597bffb7164421b
+    default = "subnet-04597bffb7164421b"
 }
