@@ -4,7 +4,7 @@ resource "aws_instance" "ec2-host" {
   ami                         = var.instance_ami
   instance_type               = var.instance_type
   associate_public_ip_address = true
-  subnet_id                   = 
+  subnet_id                   = var.subnet_id
   vpc_security_group_ids      = ["main-sg"]
   key_name                    = var.key_pair
  
