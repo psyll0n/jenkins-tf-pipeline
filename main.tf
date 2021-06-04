@@ -1,16 +1,10 @@
 
-module "vpc" {
-  source  = "../modules"
-  name = var.vpc_name
-  cidr = var.vpc_cidr
-
-  azs             = var.vpc_azs
-  private_subnets = var.vpc_private_subnets
-  public_subnets  = var.vpc_public_subnets
-
-  tags = var.vpc_tags
+module "vpc_module" {
+  source = "./modules/vpc"
+  vpc_cidr_block = var.vpc_cidr_block
+  public_subnet_cidr = var.public_subnet_cidr
+  private_subnet_cidr = var.private_subnet_cidr
 }
-
 
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "devops-tf-tfstate-backend"
