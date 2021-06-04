@@ -16,30 +16,20 @@ pipeline {
         stage("TF Init&Plan") { 
             steps { 
                 sh 'terraform init'
-                sh 'terraform plan'
+                sh 'terraform plan -out=tfplan -input=false'
             }
         }
-        stage('Approval') {
-            when {
-                not {
-                    equals expected: true, actual: params.autoApprove
-                }
-            }
-
+         stage('Approval') {
+      steps {
+        script {
+          def userInput = input(id: 'confirm', message: 'Apply Terraform?', parameters: [ [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Apply terraform', name: 'confirm'] ])
+           }
+         }
+       }
+        stage('TF Apply') {
             steps {
-                script {
-                    def plan = readFile 'tfplan.txt'
-                    input message: "Do you want to apply the plan?",
-                        parameters: [text(name: 'Plan', description: 'Please review the plan', defaultValue: plan)]
-                }
-            }
-        }
-
-        stage('Apply') {
-            steps {
-                sh "terraform apply -input=false tfplan"
-            }
+                    sh 'terraform apply -input=false tfplan'
+           }
         }
     }
-}
-
+ }
