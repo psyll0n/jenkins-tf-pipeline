@@ -30,6 +30,3 @@ output "private_subnet_cidr_c" {
     value = aws_subnet.private_subnet_c.cidr_block
 }
 
-output "aws_internet_gateway" {
-    value = aws_internet_gateway.
-}
