@@ -89,20 +89,20 @@ resource "aws_route_table" "rt" {
   }
 }
 
-
 resource "aws_route_table_association" "rta-a" {
-  subnet_id = aws_subnet.public_subnet_a.id
-  route_table_id = aws_route_table.rt.id
+  subnet_id      = "{aws_subnet.public_subnet_a.id}"
+  route_table_id = "{aws_route_table.rt.id}"
 }
 
+
 resource "aws_route_table_association" "rta-b" {
-  subnet_id = aws_subnet.public_subnet_b.id
-  route_table_id = aws_route_table.rt.id
+  subnet_id = "{aws_subnet.public_subnet_b.id}"
+  route_table_id = "{aws_route_table.rt.id}"
 }
 
 resource "aws_route_table_association" "rta-c" {
-  subnet_id = aws_subnet.public_subnet_c.id
-  route_table_id = aws_route_table.rt.id
+  subnet_id = "{aws_subnet.public_subnet_c.id}"
+  route_table_id = "{aws_route_table.rt.id}"
 }
 
 
