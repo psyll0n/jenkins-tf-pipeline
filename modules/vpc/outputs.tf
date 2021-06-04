@@ -7,27 +7,27 @@ output "vpc_cidr" {
 }
 
 output "public_subnet_cidr_a" {
-    value = aws_subnet.public_subnet_a.cidr_block
+    value = "${aws_subnet.public_subnet_a.cidr_block.id}"
 }
 
 output "private_subnet_cidr_a" {
-    value = aws_subnet.private_subnet_a.cidr_block
+    value = "${aws_subnet.private_subnet_a.cidr_block.id}"
 }
 
 output "public_subnet_cidr_b" {
-    value = aws_subnet.public_subnet_b.cidr_block
+    value = "${aws_subnet.public_subnet_b.cidr_block.id}"
 }
 
 output "private_subnet_cidr_b" {
-    value = aws_subnet.private_subnet_b.cidr_block
+    value = "${aws_subnet.private_subnet_b.cidr_block.id}"
 }
 
 output "public_subnet_cidr_c" {
-    value = aws_subnet.public_subnet_c.cidr_block
+    value = "${aws_subnet.public_subnet_c.cidr_block.id}"
 }
 
 output "private_subnet_cidr_c" {
-    value = aws_subnet.private_subnet_c.cidr_block
+    value = "${aws_subnet.private_subnet_c.cidr_block.id}"
 }
 
 output "aws_internet_gateway" {
@@ -38,3 +38,6 @@ output "aws_route_table" {
     value = aws_route_table.rt.id
 }
 
+output "sg_id_output"{
+ value = "${aws_security_group.sg.id}"
+}

@@ -72,5 +72,5 @@ variable "root_device_size" {
 
 variable "subnet_id" {
     description = "Subnet where the EC2 instance is deployed"
-    default = "public_subnet_a"
+    default = "${aws_subnet.public_subnet_a.cidr_block.id}"
 }

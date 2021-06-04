@@ -5,7 +5,7 @@ resource "aws_instance" "ec2-host" {
   instance_type               = var.instance_type
   associate_public_ip_address = true
   subnet_id                   = var.subnet_id
-  vpc_security_group_ids      = ["main-sg"]
+  vpc_security_group_ids      = ["${aws_security_group.sg.id}"]
   key_name                    = var.key_pair
  
   root_block_device {
