@@ -9,15 +9,6 @@ module "vpc_module" {
   private_subnet_cidr_c = var.private_subnet_cidr_c
 }
 
-module "ec2_module" {
-  source           = "./modules/ec2"
-  instance_ami     = var.instance_ami
-  instance_type    = var.instance_type
-  key_pair         = var.key_pair
-  root_device_type = var.root_device_type
-  root_device_size = var.root_device_size
-  subnet_id        = var.subnet_id
-}
 
 
 resource "aws_s3_bucket" "terraform_state" {
@@ -47,3 +38,24 @@ resource "aws_dynamodb_table" "terraform_locks" {
     type = "S"
   }
 }
+
+
+resource "aws_instance" "ec2-host" {
+  ami                         = var.instance_ami
+  instance_type               = var.instance_type
+  associate_public_ip_address = true
+  subnet_id                   = var.public_subnet_a
+  key_name                    = var.key_pair
+ 
+  root_block_device {
+    delete_on_termination = true
+    encrypted             = false
+    volume_size           = var.root_device_size
+    volume_type           = var.root_device_type
+  }
+ 
+  tags = {
+    Name = "EC2-Jump-Host"
+  }
+}
+
