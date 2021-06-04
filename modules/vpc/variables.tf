@@ -27,4 +27,3 @@ variable "public_subnet_cidr_c" {
 variable "private_subnet_cidr_c" {
   description = "Private Subnet CIDR C"
 }
-

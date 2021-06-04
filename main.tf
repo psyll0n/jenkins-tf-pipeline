@@ -12,7 +12,7 @@ module "vpc_module" {
 
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "devops-tf-tfstate-backend"
+  bucket = "devops-tfstate-backend"
   # Enable versioning so we can see the full revision history of our
   # state files
   versioning {
@@ -28,25 +28,6 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 }
 
-resource "aws_s3_bucket_policy" "terraform_state_bucket" {
-  bucket = "${aws_s3_bucket.terraform_state.id}"
-
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Id": "MYBUCKETPOLICY",
-  "Statement": [
-    {
-      "Sid": "IPAllow",
-      "Effect": "Deny",
-      "Principal": "*",
-      "Action": "s3:*",
-      "Resource": "arn:aws:s3:::devops-tf-tfstate-backend/*"
-    }
-  ]
-}
-POLICY
-}
 
 resource "aws_dynamodb_table" "terraform_locks" {
   name         = "terraform-tfstate-locks"
