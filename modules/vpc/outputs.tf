@@ -30,3 +30,14 @@ output "private_subnet_cidr_c" {
     value = aws_subnet.private_subnet_c.cidr_block
 }
 
+output "aws_internet_gateway" {
+    value = aws_internet_gateway.gw.id
+}
+
+output "aws_route_table" {
+    value = aws_route_table.rt.id
+}
+
+output "aws_security_group" {
+    value = aws_security_group.sg.id
+}
