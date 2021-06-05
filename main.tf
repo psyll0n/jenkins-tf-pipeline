@@ -12,7 +12,7 @@ module "vpc_module" {
 
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "devops-tfstate-backend"
+  bucket = "devops-tf-tfstate-backend"
   # Enable versioning so we can see the full revision history of our
   # state files
   versioning {
@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "terraform_state" {
 
 
 resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "terraform-tfstate-locks"
+  name         = "dynamodb-tf-tfstate-locks"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
   attribute {
