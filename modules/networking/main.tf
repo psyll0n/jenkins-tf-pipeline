@@ -113,7 +113,7 @@ resource "aws_route_table_association" "rta-c" {
 resource "aws_security_group" "sg" {
   name        = "main-sg"
   description = "Default SG for the 10.0.0.0/16 VPC"
-  vpc_id      = "${aws_vpc.vpc.id}"
+  vpc_id      =  "${aws_vpc.vpc.id}"
   depends_on  = [aws_vpc.vpc]
 
 
