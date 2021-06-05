@@ -136,3 +136,4 @@ resource "aws_security_group" "sg" {
     Name = "Main-SG"
   }
 }
+

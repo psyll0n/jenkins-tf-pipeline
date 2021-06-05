@@ -75,6 +75,8 @@ resource "aws_instance" "ubuntu" {
     "${module.networking.sg_id}"
   ]
 
+  associate_public_ip_address = true
+
   ebs_block_device {
     device_name = "/dev/sda1"
     volume_type = "gp2"
@@ -86,3 +88,16 @@ resource "aws_eip" "ubuntu" {
   vpc      = true
   instance = aws_instance.ubuntu.id
 }
+
+
+
+resource "aws_network_interface" "eni" {
+  subnet_id       = "${module.networking.public_subnet_a_id}"
+  security_groups = ["${module.networking.sg_id}"]
+
+  attachment {
+    instance     = aws_instance.ubuntu.id
+    device_index = 1
+  }
+}
+

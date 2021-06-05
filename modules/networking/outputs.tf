@@ -2,8 +2,13 @@ output vpc_id {
     value = "${aws_vpc.vpc.id}"
 }
 
+
+output "public_subnet_a_id" {
+    value = "${aws_subnet.public_subnet_a.id}"
+}
+
 output "public_subnet_cidr_a" {
-    value = aws_subnet.public_subnet_a.cidr_block
+    value = "${aws_subnet.public_subnet_a.cidr_block}"
 }
 
 output "private_subnet_cidr_a" {
