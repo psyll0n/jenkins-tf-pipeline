@@ -10,8 +10,8 @@ terraform {
 provider "aws" {
   # Configuration options
   region                  = "eu-central-1"
-  shared_credentials_file = "/home/psyll0n/.aws"
-  profile                 = "terraform"
+  shared_credentials_file = "$HOME/.aws/credentials"
+  profile                 = "default"
 }
 
 
