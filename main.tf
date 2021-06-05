@@ -62,9 +62,16 @@ resource "aws_dynamodb_table" "terraform_locks" {
 }
 
 
-resource "aws_security_group" "ubuntu" {
+data "aws_vpc" "vpc_module" {
+  default = false
+}
+
+resource "aws_security_group" "sg-ec2" {
   name        = "ubuntu-security-group"
   description = "Allow HTTP, HTTPS and SSH traffic"
+  vpc_id      =  data.aws_vpc.vpc_module.id
+
+
 
   ingress {
     description = "SSH"
@@ -87,6 +94,7 @@ resource "aws_security_group" "ubuntu" {
 }
 
 
+
 resource "aws_instance" "ubuntu" {
   key_name      = "aws-ssh-keypair"
   ami           = "ami-043097594a7df80ec"
@@ -96,20 +104,13 @@ resource "aws_instance" "ubuntu" {
   }
 
   vpc_security_group_ids = [
-    aws_security_group.ubuntu.id
+    aws_security_group.sg-ec2.id
   ]
-
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file("key")
-    host        = self.public_ip
-  }
 
   ebs_block_device {
     device_name = "/dev/sda1"
     volume_type = "gp2"
-    volume_size = 30
+    volume_size = 10
   }
 }
 
