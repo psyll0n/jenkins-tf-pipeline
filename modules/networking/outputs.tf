@@ -1,10 +1,4 @@
-output "vpc_module_id" {
-    value = "${aws_vpc.vpc_module.id}"
-}
 
-output "vpc_cidr" {
-    value = aws_vpc.vpc_module.cidr_block
-}
 
 output "public_subnet_cidr_a" {
     value = aws_subnet.public_subnet_a.cidr_block
@@ -28,4 +22,8 @@ output "public_subnet_cidr_c" {
 
 output "private_subnet_cidr_c" {
     value = aws_subnet.private_subnet_c.cidr_block
+}
+
+output "sg_id" {
+    value = "${aws_security_group.sg.id}"
 }

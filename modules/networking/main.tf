@@ -1,16 +1,19 @@
 
 
-resource "aws_vpc" "vpc_module" {
-  cidr_block = var.vpc_cidr_block
+resource "aws_vpc" "vpc" {
+    cidr_block = "10.0.0.0/16"
+
+  tags = {
+    Name = "VPC-10-0-0-0-16"
+  }
 }
 
 
 resource "aws_subnet" "public_subnet_a" {
   cidr_block = var.public_subnet_cidr_a
-  vpc_id = "${aws_vpc.vpc_module.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
   availability_zone = "eu-central-1a"
   map_public_ip_on_launch = "true"
-
 
   tags = {
     Name = "Public Subnet-A"
@@ -19,7 +22,7 @@ resource "aws_subnet" "public_subnet_a" {
 
 resource "aws_subnet" "private_subnet_a" {
   cidr_block = var.private_subnet_cidr_a
-  vpc_id = "${aws_vpc.vpc_module.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
   availability_zone = "eu-central-1a"
 
   tags = {
@@ -29,7 +32,7 @@ resource "aws_subnet" "private_subnet_a" {
 
 resource "aws_subnet" "public_subnet_b" {
   cidr_block = var.public_subnet_cidr_b
-  vpc_id = "${aws_vpc.vpc_module.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
   availability_zone = "eu-central-1b"
   map_public_ip_on_launch = "true"
 
@@ -40,7 +43,7 @@ resource "aws_subnet" "public_subnet_b" {
 
 resource "aws_subnet" "private_subnet_b" {
   cidr_block = var.private_subnet_cidr_b
-  vpc_id = "${aws_vpc.vpc_module.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
   availability_zone = "eu-central-1b"
 
   tags = {
@@ -50,7 +53,7 @@ resource "aws_subnet" "private_subnet_b" {
 
 resource "aws_subnet" "public_subnet_c" {
   cidr_block = var.public_subnet_cidr_c
-  vpc_id = "${aws_vpc.vpc_module.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
   availability_zone = "eu-central-1c"
   map_public_ip_on_launch = "true"
 
@@ -61,7 +64,7 @@ resource "aws_subnet" "public_subnet_c" {
 
 resource "aws_subnet" "private_subnet_c" {
   cidr_block = var.private_subnet_cidr_c
-  vpc_id = "${aws_vpc.vpc_module.id}"
+  vpc_id = "${aws_vpc.vpc.id}"
   availability_zone = "eu-central-1c"
 
   tags = {
@@ -69,9 +72,8 @@ resource "aws_subnet" "private_subnet_c" {
   }
 }
 
-
 resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.vpc_module.id
+  vpc_id = aws_vpc.vpc.id
 
   tags = {
     Name = "main-igw"
@@ -79,7 +81,7 @@ resource "aws_internet_gateway" "gw" {
 }
 
 resource "aws_route_table" "rt" {
-  vpc_id = aws_vpc.vpc_module.id
+  vpc_id = aws_vpc.vpc.id
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -108,11 +110,12 @@ resource "aws_route_table_association" "rta-c" {
 }
 
 
-
 resource "aws_security_group" "sg" {
   name        = "main-sg"
   description = "Default SG for the 10.0.0.0/16 VPC"
-  vpc_id      = aws_vpc.vpc_module.id
+  vpc_id      = "${aws_vpc.vpc.id}"
+  depends_on  = [aws_vpc.vpc]
+
 
   ingress {
     description      = "Inbound SSH"

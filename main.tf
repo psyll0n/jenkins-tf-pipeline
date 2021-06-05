@@ -1,6 +1,5 @@
-module "vpc_module" {
-  source                = "./modules/vpc"
-  vpc_cidr_block        = var.vpc_cidr_block
+module "networking" {
+  source                = "./modules/networking"
   public_subnet_cidr_a  = var.public_subnet_cidr_a
   private_subnet_cidr_a = var.private_subnet_cidr_a
   public_subnet_cidr_b  = var.public_subnet_cidr_b
@@ -28,7 +27,7 @@ resource "aws_s3_bucket" "terraform_state" {
 }
 
 resource "aws_s3_bucket_policy" "terraform_state" {
-  bucket = "${aws_s3_bucket.terraform_state.id}"
+  bucket = aws_s3_bucket.terraform_state.id
 
   policy = <<POLICY
 {
@@ -62,38 +61,6 @@ resource "aws_dynamodb_table" "terraform_locks" {
 }
 
 
-data "aws_vpc" "vpc_module" {
-  default = true
-}
-
-resource "aws_security_group" "sg-ec2" {
-  name        = "ubuntu-security-group"
-  description = "Allow HTTP, HTTPS and SSH traffic"
-  vpc_id      =  data.aws_vpc.vpc_module.id
-
-
-
-  ingress {
-    description = "SSH"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "sg-bastion-host"
-  }
-}
-
-
 
 resource "aws_instance" "ubuntu" {
   key_name      = "aws-ssh-keypair"
@@ -104,7 +71,7 @@ resource "aws_instance" "ubuntu" {
   }
 
   vpc_security_group_ids = [
-    aws_security_group.sg-ec2.id
+    "${module.networking.sg_id}"
   ]
 
   ebs_block_device {
