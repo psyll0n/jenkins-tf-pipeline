@@ -10,7 +10,6 @@ module "vpc_module" {
 }
 
 
-
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "devops-tf-tfstate-backend"
   # Enable versioning so we can see the full revision history of our
@@ -63,21 +62,58 @@ resource "aws_dynamodb_table" "terraform_locks" {
 }
 
 
-resource "aws_instance" "ec2-jump-host" {
-  ami                         = var.instance_ami
-  instance_type               = var.instance_type
-  associate_public_ip_address = true
-  key_name                    = var.key_pair
- 
-  root_block_device {
-    delete_on_termination = true
-    encrypted             = false
-    volume_size           = var.root_device_size
-    volume_type           = var.root_device_type
+resource "aws_security_group" "ubuntu" {
+  name        = "ubuntu-security-group"
+  description = "Allow HTTP, HTTPS and SSH traffic"
+
+  ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
- 
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = {
-    Name = "EC2-Jump-Host"
+    Name = "sg-bastion-host"
   }
 }
 
+
+resource "aws_instance" "ubuntu" {
+  key_name      = "aws_key_pair"
+  ami           = "ami-043097594a7df80ec"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "Ubuntu-JumpBox"
+  }
+
+  vpc_security_group_ids = [
+    aws_security_group.ubuntu.id
+  ]
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("key")
+    host        = self.public_ip
+  }
+
+  ebs_block_device {
+    device_name = "/dev/sda1"
+    volume_type = "gp2"
+    volume_size = 30
+  }
+}
+
+resource "aws_eip" "ubuntu" {
+  vpc      = true
+  instance = aws_instance.ubuntu.id
+}
