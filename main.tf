@@ -42,7 +42,7 @@ resource "aws_s3_bucket_policy" "terraform_state" {
       "Action": "s3:*",
       "Resource": "arn:aws:s3:::devops-tf-tfstate-backend/*",
       "Condition": {
-         "IpAddress": {"aws:SourceIp": "8.8.8.8/32"}
+         "IpAddress": {"aws:SourceIp": "0.0.0.0/0"}
       }
     }
   ]
@@ -88,7 +88,7 @@ resource "aws_security_group" "ubuntu" {
 
 
 resource "aws_instance" "ubuntu" {
-  key_name      = "aws_key_pair"
+  key_name      = "aws-ssh-keypair"
   ami           = "ami-043097594a7df80ec"
   instance_type = "t2.micro"
   tags = {
