@@ -1,7 +1,9 @@
 
+
 resource "aws_vpc" "vpc_module" {
   cidr_block = var.vpc_cidr_block
 }
+
 
 resource "aws_subnet" "public_subnet_a" {
   cidr_block = var.public_subnet_cidr_a

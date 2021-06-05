@@ -1,5 +1,5 @@
 output "vpc_module_id" {
-    value = aws_vpc.vpc_module.id
+    value = "${aws_vpc.vpc_module.id}"
 }
 
 output "vpc_cidr" {

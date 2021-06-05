@@ -63,7 +63,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
 
 
 data "aws_vpc" "vpc_module" {
-  default = false
+  default = true
 }
 
 resource "aws_security_group" "sg-ec2" {
