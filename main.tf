@@ -66,6 +66,7 @@ resource "aws_instance" "ubuntu" {
   key_name      = "aws-ssh-keypair"
   ami           = "ami-043097594a7df80ec"
   instance_type = "t2.micro"
+  availability_zone = "eu-central-1a"
   tags = {
     Name = "Ubuntu-JumpBox"
   }
