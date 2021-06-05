@@ -28,6 +28,29 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 }
 
+resource "aws_s3_bucket_policy" "terraform_state" {
+  bucket = "${aws_s3_bucket.terraform_state.id}"
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "MYBUCKETPOLICY",
+  "Statement": [
+    {
+      "Sid": "IPAllow",
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "s3:*",
+      "Resource": "arn:aws:s3:::devops-tf-tfstate-backend/*",
+      "Condition": {
+         "IpAddress": {"aws:SourceIp": "8.8.8.8/32"}
+      }
+    }
+  ]
+}
+POLICY
+}
+
 
 resource "aws_dynamodb_table" "terraform_locks" {
   name         = "dynamodb-tf-tfstate-locks"
