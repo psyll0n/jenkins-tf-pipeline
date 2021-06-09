@@ -2,6 +2,9 @@ output vpc_id {
     value = "${aws_vpc.vpc.id}"
 }
 
+output igw {
+    value = "${aws_internet_gateway.igw.id}"
+}
 
 output "public_subnet_a_id" {
     value = "${aws_subnet.public_subnet_a.id}"
@@ -31,6 +34,3 @@ output "private_subnet_cidr_c" {
     value = aws_subnet.private_subnet_c.cidr_block
 }
 
-output "sg_id" {
-    value = "${aws_security_group.sg.id}"
-}

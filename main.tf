@@ -63,17 +63,15 @@ resource "aws_dynamodb_table" "terraform_locks" {
 
 
 resource "aws_instance" "ubuntu" {
-  key_name      = "aws-ssh-keypair"
-  ami           = "ami-043097594a7df80ec"
-  instance_type = "t2.micro"
+  key_name               = "aws-ssh-keypair"
+  ami                    = "ami-043097594a7df80ec"
+  instance_type          = "t2.micro"
+  vpc_security_group_ids = ["${aws_security_group.sg.id}"]
+
   availability_zone = "eu-central-1a"
   tags = {
     Name = "Ubuntu-JumpBox"
   }
-
-  vpc_security_group_ids = [
-    "${module.networking.sg_id}"
-  ]
 
   associate_public_ip_address = true
 
@@ -84,20 +82,29 @@ resource "aws_instance" "ubuntu" {
   }
 }
 
-resource "aws_eip" "ubuntu" {
-  vpc      = true
-  instance = aws_instance.ubuntu.id
-}
+resource "aws_security_group" "sg" {
+  name        = "main-sg"
+  description = "Default SG for EC2"
+  depends_on  = [aws_instance.ubuntu]
 
 
+  ingress {
+    description = "Inbound SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-resource "aws_network_interface" "eni" {
-  subnet_id       = "${module.networking.public_subnet_a_id}"
-  security_groups = ["${module.networking.sg_id}"]
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-  attachment {
-    instance     = aws_instance.ubuntu.id
-    device_index = 1
+  tags = {
+    Name = "Main-SG"
   }
 }
 
