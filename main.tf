@@ -66,7 +66,7 @@ resource "aws_instance" "ubuntu" {
   key_name               = "aws-ssh-keypair"
   ami                    = "ami-043097594a7df80ec"
   instance_type          = "t2.micro"
-  vpc_security_group_ids = ["${aws_security_group.sg.id}"]
+  vpc_security_group_ids = "${aws_security_group.sg.id}"
 
   availability_zone = "eu-central-1a"
   tags = {
@@ -85,8 +85,6 @@ resource "aws_instance" "ubuntu" {
 resource "aws_security_group" "sg" {
   name        = "main-sg"
   description = "Default SG for EC2"
-  depends_on  = [aws_instance.ubuntu]
-
 
   ingress {
     description = "Inbound SSH"
