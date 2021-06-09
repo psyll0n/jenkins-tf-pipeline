@@ -30,7 +30,6 @@ resource "aws_instance" "ubuntu" {
   }
 }
 
-
 resource "aws_security_group" "sg" {
   name        = "main-sg"
   description = "Default SG for EC2"
