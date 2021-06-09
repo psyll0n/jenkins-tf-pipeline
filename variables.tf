@@ -37,38 +37,3 @@ variable "private_subnet_cidr_c" {
   description = "Private Subnet CIDR"
 }
 
-
-# Variables for EC2 Instance
-######################################
-
-variable "instance_ami" {
-  description = "ID of the AMI used"
-  type        = string
-  default     = "ami-043097594a7df80ec"
-}
-
-variable "instance_type" {
-  description = "Type of the instance"
-  type        = string
-  default     = "t2.micro"
-}
-
-variable "key_pair" {
-  description = "SSH Key pair used to connect"
-  type        = string
-  default     = "aws-ssh-keypair"
-}
-
-variable "root_device_type" {
-  description = "Type of the root block device"
-  type        = string
-  default     = "gp2"
-}
-
-variable "root_device_size" {
-  description = "Size of the root block device"
-  type        = string
-  default     = "8"
-}
-
-
