@@ -67,13 +67,14 @@ resource "aws_instance" "ubuntu" {
   ami                    = "ami-043097594a7df80ec"
   instance_type          = "t2.micro"
   vpc_security_group_ids = "${aws_security_group.sg.id}"
-
   availability_zone = "eu-central-1a"
+  depends_on  = [aws_security_group.sg]
   tags = {
     Name = "Ubuntu-JumpBox"
   }
 
   associate_public_ip_address = true
+
 
   ebs_block_device {
     device_name = "/dev/sda1"
@@ -82,9 +83,11 @@ resource "aws_instance" "ubuntu" {
   }
 }
 
+
 resource "aws_security_group" "sg" {
   name        = "main-sg"
   description = "Default SG for EC2"
+
 
   ingress {
     description = "Inbound SSH"
